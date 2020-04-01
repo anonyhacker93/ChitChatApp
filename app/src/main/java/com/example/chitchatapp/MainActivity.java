@@ -125,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
             sendUserToSettingsActivity();
         }
         if (item.getItemId() == R.id.main_find_friend) {
-
+            sendUserToFindFriendActivity();
         }
         return true;
     }
@@ -141,11 +141,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String groupName = groupNameField.getText().toString();
-                if(TextUtils.isEmpty(groupName)){
+                if (TextUtils.isEmpty(groupName)) {
                     Toast.makeText(MainActivity.this, "Please enter group name", Toast.LENGTH_SHORT).show();
-                }else{
-                createNewGroup(groupName);
-            }
+                } else {
+                    createNewGroup(groupName);
+                }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -161,13 +161,18 @@ public class MainActivity extends AppCompatActivity {
         rootRef.child("Groups").child(groupName).setValue("").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
-           if(task.isSuccessful()){
-               Toast.makeText(MainActivity.this,  groupName+" succesfully created", Toast.LENGTH_SHORT).show();
-           }else{
-               String message = task.getException().toString();
-               Toast.makeText(MainActivity.this, "error " + message, Toast.LENGTH_SHORT).show();
-           }
+                if (task.isSuccessful()) {
+                    Toast.makeText(MainActivity.this, groupName + " succesfully created", Toast.LENGTH_SHORT).show();
+                } else {
+                    String message = task.getException().toString();
+                    Toast.makeText(MainActivity.this, "error " + message, Toast.LENGTH_SHORT).show();
+                }
             }
         });
+    }
+    public void sendUserToFindFriendActivity() {
+        Intent findFriendIntent = new Intent(MainActivity.this, FindFriendActivity.class);
+        startActivity(findFriendIntent);
+        finish();
     }
 }

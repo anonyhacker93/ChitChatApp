@@ -1,5 +1,7 @@
 package com.example.chitchatapp;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,14 +32,18 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
+    private ProgressDialog loadingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_login);
 
+        loadingBar = new ProgressDialog(this);
+
         mAuth = FirebaseAuth.getInstance();
         initField();
+
         sendVerifyCodeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -46,7 +52,10 @@ public class PhoneLoginActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(phoneNumber)) {
                     Toast.makeText(PhoneLoginActivity.this, "Please enter phone number", Toast.LENGTH_SHORT).show();
                 } else {
-
+                    loadingBar.setTitle("Phone Verification");
+                    loadingBar.setMessage("Please wait while we are verification you phone");
+                    loadingBar.setCanceledOnTouchOutside(false);
+                    loadingBar.show();
                     PhoneAuthProvider.getInstance().verifyPhoneNumber(
                             phoneNumber,        // Phone number to verify
                             60,                 // Timeout duration
@@ -54,6 +63,28 @@ public class PhoneLoginActivity extends AppCompatActivity {
                             PhoneLoginActivity.this,               // Activity (for callback binding)
                             callback);        // OnVerificationStateChangedCallbacks
                 }
+            }
+        });
+
+        verifyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                inputPhoneNumber.setVisibility(View.INVISIBLE);
+                sendVerifyCodeButton.setVisibility(View.INVISIBLE);
+
+                String verificationCode = inputVerificationCode.getText().toString();
+                if (TextUtils.isEmpty(verificationCode)) {
+                    Toast.makeText(PhoneLoginActivity.this, "Please enter your verification code", Toast.LENGTH_SHORT).show();
+                } else {
+                    loadingBar.setTitle("Verification Code");
+                    loadingBar.setMessage("Please wait while we are verification you code");
+                    loadingBar.setCanceledOnTouchOutside(false);
+                    loadingBar.show();
+
+                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, verificationCode);
+                    signInWithPhoneAuthCredential(credential);
+                }
+
             }
         });
 
@@ -67,6 +98,7 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
             @Override
             public void onVerificationFailed(FirebaseException e) {
+                loadingBar.dismiss();
                 Toast.makeText(PhoneLoginActivity.this, "Invalid phone number, Please enter correct phone number with your country code", Toast.LENGTH_SHORT).show();
 
                 inputPhoneNumber.setVisibility(View.VISIBLE);
@@ -81,6 +113,8 @@ public class PhoneLoginActivity extends AppCompatActivity {
 
                 mVerificationId = verificationId;
                 mResendToken = token;
+                loadingBar.dismiss();
+
                 Toast.makeText(PhoneLoginActivity.this, "code has been sent", Toast.LENGTH_SHORT).show();
                 inputPhoneNumber.setVisibility(View.INVISIBLE);
                 sendVerifyCodeButton.setVisibility(View.INVISIBLE);
@@ -104,11 +138,19 @@ public class PhoneLoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
+                            loadingBar.dismiss();
+                            Toast.makeText(PhoneLoginActivity.this, "Congratulation, You're logged in successfully", Toast.LENGTH_SHORT).show();
+                            sendUserToMainActivity();
                         } else {
-
+                            String errorMessage = task.getException().toString();
+                            Toast.makeText(PhoneLoginActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    private void sendUserToMainActivity() {
+        Intent mainIntent = new Intent(PhoneLoginActivity.this, MainActivity.class);
+        startActivity(mainIntent);
     }
 }
