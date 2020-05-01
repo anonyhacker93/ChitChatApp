@@ -21,8 +21,6 @@
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
     </com.google.android.material.appbar.AppBarLayout>
 
-
-
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/main_tabs_pager"
         android:layout_width="match_parent"

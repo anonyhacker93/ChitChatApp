@@ -31,7 +31,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/visitProfileStaus"
+        android:id="@+id/visitProfileStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/visitProfileName"
@@ -47,7 +47,7 @@
         android:id="@+id/send_message_request_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/visitProfileStaus"
+        android:layout_below="@id/visitProfileStatus"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="40dp"
@@ -57,4 +57,20 @@
         android:textColor="@android:color/white"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/decline_message_request_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/send_message_request_button"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/buttons"
+        android:text="Cancel Chat Requests"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible"/>
 </RelativeLayout>

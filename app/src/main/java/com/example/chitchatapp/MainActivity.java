@@ -114,17 +114,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         super.onOptionsItemSelected(item);
-        if (item.getItemId() == R.id.main_logout) {
+
+        if (item.getItemId() == R.id.main_logout_option) {
             mAuth.signOut();
             sendUserToLoginActivity();
         }
-        if (item.getItemId() == R.id.main_create_group) {
+        if (item.getItemId() == R.id.main_create_group_option) {
             requestNewGroup();
         }
-        if (item.getItemId() == R.id.main_setting) {
+        if (item.getItemId() == R.id.main_setting_option) {
             sendUserToSettingsActivity();
         }
-        if (item.getItemId() == R.id.main_find_friend) {
+        if (item.getItemId() == R.id.main_find_friend_option) {
             sendUserToFindFriendActivity();
         }
         return true;

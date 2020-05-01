@@ -22,9 +22,9 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private Button CreateAccountButtton;
-    private EditText UserEmail, UserPassword;
-    private TextView AlreadyHaveAnAccount;
+    private Button createAccountButtton;
+    private EditText userEmail, userPassword;
+    private TextView alreadyHaveAnAccount;
     private FirebaseAuth mAuth;
     private ProgressDialog loadingBar;
     private DatabaseReference databaseRef;
@@ -39,13 +39,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         intiField();
 
-        AlreadyHaveAnAccount.setOnClickListener(new View.OnClickListener() {
+        alreadyHaveAnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { sendUserToLoginActivity();
             }
         });
 
-        CreateAccountButtton.setOnClickListener(new View.OnClickListener() {
+        createAccountButtton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createNewAccount();
@@ -56,17 +56,17 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void intiField() {
-        CreateAccountButtton = findViewById(R.id.register_button);
-        UserEmail = findViewById(R.id.register_emial);
-        UserPassword = findViewById(R.id.register_passwword);
-        AlreadyHaveAnAccount = findViewById(R.id.already_have_an_account);
+        createAccountButtton = findViewById(R.id.register_button);
+        userEmail = findViewById(R.id.register_emial);
+        userPassword = findViewById(R.id.register_passwword);
+        alreadyHaveAnAccount = findViewById(R.id.already_have_an_account);
         loadingBar = new ProgressDialog(this);
     }
 
     private void createNewAccount() {
 
-        String emial = UserEmail.getText().toString();
-        String password = UserPassword.getText().toString();
+        String emial = userEmail.getText().toString();
+        String password = userPassword.getText().toString();
         if (TextUtils.isEmpty(emial)) {
             Toast.makeText(this, "Please enter emial...", Toast.LENGTH_SHORT).show();
         }
@@ -101,7 +101,6 @@ public class RegisterActivity extends AppCompatActivity {
     private void sendUserToLoginActivity() {
         Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
         startActivity(loginIntent);
-        finish();
     }
 
     private void sendUserToMainActivity() {
