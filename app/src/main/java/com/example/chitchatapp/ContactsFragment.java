@@ -65,7 +65,7 @@ public class ContactsFragment extends Fragment {
         FirebaseRecyclerOptions options = new FirebaseRecyclerOptions.Builder<Contacts>().setQuery(contactsRef, Contacts.class).build();
 
 
-        FirebaseRecyclerAdapter<Contacts, ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<Contacts, ContactsViewHolder>() {
+        FirebaseRecyclerAdapter<Contacts, ContactsViewHolder> adapter = new FirebaseRecyclerAdapter<Contacts, ContactsViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull final ContactsViewHolder contactsViewHolder, int i, @NonNull Contacts contacts) {
 
@@ -103,11 +103,14 @@ public class ContactsFragment extends Fragment {
             @Override
             public ContactsViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
 
-                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_display_layout, viewGroup, false, );
+                View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.user_display_layout, viewGroup, false);
                 ContactsViewHolder viewHolder = new ContactsViewHolder(view);
                 return viewHolder;
             }
-        }
+        };
+        myContactsList.setAdapter(adapter);
+        adapter.startListening();
+
     }
 
     public static class ContactsViewHolder extends RecyclerView.ViewHolder {
@@ -119,7 +122,7 @@ public class ContactsFragment extends Fragment {
 
             userName = itemView.findViewById(R.id.user_profile_name);
             userStatus = itemView.findViewById(R.id.user_status);
-            userImage = itemView.findViewById(R.id.user_profile_name);
+            userImage = itemView.findViewById(R.id.user_profile_image);
 
         }
     }

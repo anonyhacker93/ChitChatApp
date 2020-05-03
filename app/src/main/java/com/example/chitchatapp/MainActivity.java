@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(MainActivity.this, groupName + " succesfully created", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, groupName + " successfully created", Toast.LENGTH_SHORT).show();
                 } else {
                     String message = task.getException().toString();
                     Toast.makeText(MainActivity.this, "error " + message, Toast.LENGTH_SHORT).show();

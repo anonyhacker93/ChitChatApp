@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         sendUserToMainActivity();
-                        Toast.makeText(LoginActivity.this, "Sign In succesfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Sign In Successfully", Toast.LENGTH_SHORT).show();
                         loadingBar.dismiss();
                     } else {
                         String message = task.getException().toString();

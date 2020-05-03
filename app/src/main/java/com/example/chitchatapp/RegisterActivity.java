@@ -38,12 +38,12 @@ public class RegisterActivity extends AppCompatActivity {
         databaseRef= FirebaseDatabase.getInstance().getReference();
 
         intiField();
-
         alreadyHaveAnAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) { sendUserToLoginActivity();
             }
         });
+
 
         createAccountButtton.setOnClickListener(new View.OnClickListener() {
             @Override
