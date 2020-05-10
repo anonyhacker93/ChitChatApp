@@ -255,8 +255,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void sendChatRequest() {
 
 
-        chatRequestRef.child(senderUserId).child(receiveUserId
-        ).child("request_type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
+        chatRequestRef.child(senderUserId).child("request_type").setValue("sent").addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if(task.isSuccessful()){

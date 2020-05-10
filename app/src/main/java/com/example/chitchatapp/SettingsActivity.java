@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,6 +50,7 @@ public class SettingsActivity extends AppCompatActivity {
     private String currentId;
     private static final int galleryCode = 1;
     private ProgressDialog loadingBar;
+    private Toolbar settingToolbar;
 
 
     @Override
@@ -92,9 +94,14 @@ public class SettingsActivity extends AppCompatActivity {
         current_user_name = findViewById(R.id.set_user_name);
         current_user_status = findViewById(R.id.set_user_status);
         setImageProfile = findViewById(R.id.set_profile_image);
-       Picasso.get().load(R.drawable.login_photo).into(setImageProfile);
+
         //setImageProfile.setImageDrawable(getDrawable(R.drawable.login_photo));
         loadingBar = new ProgressDialog(this);
+        settingToolbar = findViewById(R.id.setting_app_bar_layout);
+        setSupportActionBar(settingToolbar);
+        getSupportActionBar(). setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar(). setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setTitle("Account Setting");
     }
 
     @Override
@@ -139,7 +146,7 @@ public class SettingsActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                        }else{
+                        } else {
                             Toast.makeText(SettingsActivity.this, "Went wrong", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -160,12 +167,12 @@ public class SettingsActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(status)) {
             Toast.makeText(this, "Please enter status...", Toast.LENGTH_SHORT).show();
         } else {
-            HashMap<String, String> profileMap = new HashMap<>();
+            HashMap<String, Object> profileMap = new HashMap<>();
             profileMap.put("userId", currentId);
             profileMap.put("name", currentUserName);
             profileMap.put("status", status);
 
-            rootRef.child("Users").child(currentId).setValue(profileMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            rootRef.child("Users").child(currentId).updateChildren(profileMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
@@ -199,8 +206,8 @@ public class SettingsActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(Exception e) {
-                            Log.d("ddd","error:"+e);
-                            Toast.makeText(SettingsActivity.this, ""+e, Toast.LENGTH_SHORT).show();
+                            Log.d("ddd", "error:" + e);
+                            Toast.makeText(SettingsActivity.this, "" + e, Toast.LENGTH_SHORT).show();
                         }
                     });
 

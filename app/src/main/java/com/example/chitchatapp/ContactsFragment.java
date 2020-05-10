@@ -110,7 +110,6 @@ public class ContactsFragment extends Fragment {
         };
         myContactsList.setAdapter(adapter);
         adapter.startListening();
-
     }
 
     public static class ContactsViewHolder extends RecyclerView.ViewHolder {
